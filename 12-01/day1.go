@@ -9,20 +9,37 @@ import (
 )
 
 func main() {
+	debug := false
 	depth_increases := 0
 	depth_splice := loadfile("./input-day1.txt")
-	previous_depth := int64(0)
+	depth_window_splice := make([]int64, 0)
 
-	//fmt.Println(previous_depth)
+	//load depth window splices
+	for current_pos, _ := range depth_splice {
+		current_depth_window := int64(0)
+		if current_pos+2 < len(depth_splice) {
+			if debug {
+				fmt.Println(" - step 1", depth_splice[current_pos])
+				fmt.Println(" - step 2", depth_splice[current_pos+1])
+				fmt.Println(" - step 2", depth_splice[current_pos+2])
+			}
+			current_depth_window = int64(depth_splice[current_pos] + depth_splice[current_pos+1] + depth_splice[current_pos+2])
+			depth_window_splice = append(depth_window_splice, current_depth_window)
+			if debug {
+				fmt.Println("Current Depth: ", current_depth_window)
+			}
+		}
+	}
 
-	for current_pos, current_depth := range depth_splice {
-		if current_pos <= 0 {
+	previous_depth_window := int64(0)
+	for pos, current := range depth_window_splice {
+		if pos <= 0 {
 			continue
 		}
-		previous_depth = depth_splice[current_pos-1]
-		if current_depth > previous_depth {
+		if current > previous_depth_window {
 			depth_increases += 1
 		}
+		previous_depth_window = current
 	}
 
 	fmt.Println("Depth Increases: ", depth_increases)
