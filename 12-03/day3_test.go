@@ -107,3 +107,81 @@ func Test_getEpsilonRate(t *testing.T) {
 		t.Errorf("Expected EpsilonRate is 9 got %d", result)
 	}
 }
+
+func Test_getOxygenRating(t *testing.T) {
+	input := loadfile("./sample.txt")
+	data := loadData(input)
+	result := getOxygenRating(data)
+	if result != 23 {
+		t.Errorf("Expected OxygenRating is 23 got %d", result)
+	}
+}
+
+func Test_checkEquallyCommonOnMostCommonBits(t *testing.T) {
+	test := [][]string{}
+	test = append(test, []string{"0", "0"})
+	test = append(test, []string{"0", "0"})
+	test = append(test, []string{"1", "1"})
+	test = append(test, []string{"1", "1"})
+	got := getMostCommonBitOfRow(test, 0)
+	if got != "1" {
+		t.Errorf("Expected result of 1 but got %s", got)
+	}
+}
+
+func Test_checkEquallyCommonOnLeastommonBits(t *testing.T) {
+	test := [][]string{}
+	test = append(test, []string{"0", "0"})
+	test = append(test, []string{"0", "0"})
+	test = append(test, []string{"1", "1"})
+	test = append(test, []string{"1", "1"})
+	got := getLeastCommonBitOfRow(test, 0)
+	if got != "0" {
+		t.Errorf("Expected result of 1 but got %s", got)
+	}
+}
+
+func Test_checkEquallyCommonOnLeastommonBits2(t *testing.T) {
+	test := [][]string{}
+	test = append(test, []string{"0", "0"})
+	test = append(test, []string{"0", "0"})
+	test = append(test, []string{"1", "1"})
+	test = append(test, []string{"1", "1"})
+	test = append(test, []string{"0", "0"})
+	test = append(test, []string{"0", "0"})
+	test = append(test, []string{"1", "1"})
+	test = append(test, []string{"1", "1"})
+	got := getLeastCommonBitOfRow(test, 0)
+	if got != "0" {
+		t.Errorf("Expected result of 1 but got %s", got)
+	}
+}
+
+func Test_getCO2ScrubberRating(t *testing.T) {
+	input := loadfile("./sample.txt")
+	data := loadData(input)
+	result := getCO2ScrubberRating(data)
+	if result != 10 {
+		t.Errorf("Expected CO2 Scrubber Rating is 10 got %d", result)
+	}
+}
+
+func Test_getLifeSupportRating(t *testing.T) {
+	input := loadfile("./sample.txt")
+	result := getOxygenRating(loadData(input)) * getCO2ScrubberRating(loadData(input))
+	if result != 230 {
+		t.Errorf("Expected Life Support Rating is 230 got %d", result)
+	}
+}
+
+func Test_getMostCommonBitOfRow1(t *testing.T) {
+	test := [][]string{}
+	test = append(test, []string{"1", "0", "1", "1", "0"})
+	test = append(test, []string{"1", "0", "1", "1", "1"})
+	test = append(test, []string{"1", "0", "1", "0", "1"})
+	got := getMostCommonBitOfRow(test, 3)
+	if got != "1" {
+		t.Errorf("Expected 1 got %s", got)
+	}
+
+}
